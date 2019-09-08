@@ -1,91 +1,55 @@
-var express = require('express'),
-    methodoverride = require('method-override'),
-    bodyparser = require('body-parser'),
-    mongoose = require('mongoose'),
-    seedDb = require("./seed.js"),
-    Campground = require('./models/campground.js'),
-    Comment = require("./models/comments.js");
+const express = require("express");
+const methodoverride = require("method-override");
+const bodyparser = require("body-parser");
+const mongoose = require("mongoose");
+const campgroundRoute = require("./routes/camgrounds");
+const commentRoute = require("./routes/comment");
+const indexRoute = require("./routes/index");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const UserModel = require("./models/user");
+const flash = require("connect-flash");
 
-var app = express();
-mongoose.connect("mongodb://localhost:27017/yelpcamp", { useNewUrlParser: true });
-seedDb();
+const app = express();
+mongoose.connect("mongodb://localhost:27017/yelpcamp", {
+	useNewUrlParser: true,
+	useFindAndModify: false
+});
+// const seedDb = require("./seed.js");
+// seedDb();
 app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-app.use(bodyparser.urlencoded({ extended: true }));
+app.use(express.static(`${__dirname}/public`));
+app.use(bodyparser.urlencoded({
+	extended: true
+}));
 app.use(methodoverride("_method"));
 
-app.get('/', (req, res)=>{
-    res.render("index.ejs");    
+// Passport config
+app.use(require("express-session")({
+	secret: "This is not a secret at all. Don't look",
+	resave: false,
+	saveUninitialized: false
+}));
+
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(UserModel.authenticate()));
+passport.serializeUser(UserModel.serializeUser());
+passport.deserializeUser(UserModel.deserializeUser());
+
+app.use((req, res, next) => {
+	res.locals.localUser = req.user;
+	res.locals.success = req.flash("success");
+	res.locals.errors = req.flash("error");
+	next();
 });
 
-app.get('/campgrounds', (req, res)=>{
-    
-    Campground.find({},(err,camps)=>{
-        if(err) console.log(err);
-        else{
-            res.render("campgrounds/index.ejs", {camps : camps}); //from views
-        }
-    }).limit(16);
-});
+app.use("/campgrounds", campgroundRoute);
+app.use("/campgrounds/:id/comments", commentRoute);
+app.use("/", indexRoute);
 
-app.get('/campgrounds/new', (req, res)=>{
-    res.render('campgrounds/new.ejs');
-});
-
-app.get('/campgrounds/:id', (req, res)=>{
-
-    Campground.findById(req.params.id).populate("comments").exec((err,success)=>{
-        if(err) console.log(err);
-        else{
-            res.render("campgrounds/show.ejs", {camp: success});
-        }
-    });
-});
-
-app.post('/campgrounds', (req, res)=>{
-    let newCamp = {
-        name: req.body.name,
-        image: req.body.image,
-        description: req.body.description
-    };
-
-    Campground.create(newCamp, (err, success)=>{
-        if(err) console.log(err);
-        else{
-            res.redirect("campgrounds");
-        }
-    });
-});
-
-app.get("/campgrounds/:id/comments/new", (req, res)=>{
-
-    Campground.findById(req.params.id, (err,success)=>{
-        if(err) console.log(err);
-        else{
-            res.render("comments/new.ejs", {camp : success});
-        }
-    });
-    
-});
-
-app.post('/campgrounds/:id/comments', (req, res)=>{
-    Campground.findById(req.params.id,(err, successCamp)=>{
-        if(err) console.log(err);
-        else{
-            Comment.create(req.body.comment, (err, successComm)=>{
-                if(err) console.log(err);
-                else{
-                    successCamp.comments.push(successComm);
-                    successCamp.save();
-                    res.redirect(`/campgrounds/${req.params.id}`);
-                }
-            });
-        }
-    });
-});
-
-
-app.listen(3000, ()=>{
-    console.log("RUNNING. PORT 3000");
-    console.log("http://localhost:3000");
+app.listen(3000, () => {
+	console.log("RUNNING. PORT 3000");
+	console.log("http://localhost:3000");
 });

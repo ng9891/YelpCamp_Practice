@@ -2,7 +2,7 @@
 <div class="container">
     <div class="row">
         <div class="col-md-3">
-            <p class="lead"> Yelp Camp</p>
+            <p class="lead"> YelpCamp</p>
             <div class="list-group">
                 <li class="list-group-item active">Info1</li>
                 <li class="list-group-item">Info1</li>
@@ -14,31 +14,36 @@
             <div class="card">
                 <img class="card-img-top img-fluid" src="<%=camp.image%>" alt="<%=camp.name%>">
                 <div class="card-body">
-                    <h4 class="float-right"> $9:00/night</h4>
+                    <h4 class="float-right"> $9.00/night</h4>
                     <h4 class="card-title"><a href="#"><%= camp.name %></a></h4>
+                    <p><em>Submitted by: <%=camp.author.username%></em></p>
+                    <hr>
                     <p><%= camp.description %></p>
+                    <%if(localUser && camp.author.id.equals(localUser.id)){ %>
+                    <a class="btn btn-xs btn-warning" href="/campgrounds/<%= camp.id%>/edit">Edit </a>
+                    <%}%>
                 </div>
             </div>
             <div class="card bg-light">
                 <div class="card-body">
                     <div class="text-right">
                         <a class="btn btn-success" href="/campgrounds/<%=camp._id%>/comments/new">Add a New
-                            Comment</a>
-                    </div>
-                    <hr/>
-                    <% camp.comments.forEach((comment)=>{ %>
-                        <div class="row">
-                            <div class="col-md-12">
-                                    <strong><%= comment.author %></strong>
-                                    <span class="float-right"> 10 days ago</span>
-                                    <p><%= comment.text %></p>
-                            </div>
-                        </div>
-                    <% }); %>
+                    Comment</a>
                 </div>
+                <hr />
+                <% camp.comments.forEach((comment)=>{ %>
+                <div class="row">
+                    <div class="col-md-12">
+                        <strong><%= comment.author.username %></strong>
+                        <span class="float-right"> 10 days ago</span>
+                        <p><%= comment.text %></p>
+                    </div>
+                </div>
+                <% }); %>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 <% include ../partials/footer.ejs %>
