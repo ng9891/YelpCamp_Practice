@@ -1,7 +1,7 @@
 # YelpCamp_Practice
 Learning/Practicing ExpressJS following an Udemy course.  
 [Link to the course](https://www.udemy.com/the-web-developer-bootcamp/)
-
+***
 Dependencies:
 - ExpressJS
 - MongoDB (mongoose)
@@ -13,6 +13,7 @@ Dependencies:
 - Passport
 - Connect-Flash
 
+***
 TODO LIST:
   - [x] Display campgrounds
   - [x] Comments to campgrounds
