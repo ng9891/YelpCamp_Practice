@@ -16,6 +16,7 @@ module.exports = {
 				req.flash("error", err);
 				return res.redirect("/campgrounds");
 			}
+			// Check for valid camp id
 			if (!camp) {
 				req.flash("error", "Sorry. Campground couldn't be found.");
 				return res.redirect("/campgrounds");
@@ -29,11 +30,12 @@ module.exports = {
 		});
 	},
 	checkCommentOwner(req, res, next) {
-		Comment.findById(req.params.commentId, (err, comment) => {
+		Comment.findById(req.params.comment_id, (err, comment) => {
 			if (err) {
 				req.flash("error", err);
 				return res.redirect("/campgrounds");
 			}
+			// Check for valid comment id
 			if (!comment) {
 				req.flash("error", "Sorry. Comment couldn't be found.");
 				return res.redirect("/campgrounds");
@@ -42,6 +44,7 @@ module.exports = {
 				req.flash("error", "Sorry, you are not the owner of this comment.");
 				return res.redirect("/campgrounds/" + req.params.id);
 			}
+			req.comment = comment;
 			next();
 		});
 	}

@@ -2,6 +2,15 @@ body {
     background: whitesmoke;
 }
 
+.comment-container {
+    padding-top: 2.5px;
+    padding-bottom: 2.5px;
+}
+
 .camp-delete {
+    display: inline;
+}
+
+.comment-delete {
     display: inline;
 }

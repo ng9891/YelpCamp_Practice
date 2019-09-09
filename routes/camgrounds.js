@@ -68,10 +68,9 @@ router.put("/:id/edit", isLoggedIn, checkCampgroundOwner, (req, res) => {
 		if (err) {
 			req.flash("error", err);
 			res.redirect("/");
-		} else {
-			req.flash("success", "Successfully updated.");
-			res.redirect("/campgrounds/" + req.params.id);
 		}
+		req.flash("success", "Successfully updated.");
+		res.redirect("/campgrounds/" + req.params.id);
 	});
 });
 
@@ -91,17 +90,17 @@ router.post("/", isLoggedIn, (req, res) => {
 		if (err) {
 			req.flash("error", err);
 			res.redirect("/");
-		} else {
-			req.flash("success", "Successfully created.");
-			res.redirect("/campgrounds");
 		}
+		req.flash("success", "Successfully created.");
+		res.redirect("/campgrounds");
+
 	});
 });
 
 router.delete("/:id", isLoggedIn, checkCampgroundOwner, (req, res) => {
 	Comment.deleteMany({
 		_id: {
-			$in: req.camp.comments
+			$in: req.camp.comments // Passed by middleware checkCampgroundOwner
 		}
 	}, (err) => {
 		if (err) {

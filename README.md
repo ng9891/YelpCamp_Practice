@@ -22,7 +22,7 @@ TODO LIST:
   - [x] Session
   - [x] Login and Register
   - [x] CRUD routes for campgrounds
-  - [ ] CRUD routes for comments
+  - [x] CRUD routes for comments
   - [ ] Admin user
   - [ ] Post creation with MomentJS
   - [ ] Password Reset
@@ -30,6 +30,6 @@ TODO LIST:
   - [ ] Camp geolocation
   - [ ] User Profile
   - [ ] Image Upload
+  - [ ] Pagination
   - [ ] Fuzzy Search
   - [ ] Ratings (like button)
-  - [ ] Reply to comments

@@ -20,9 +20,9 @@
                     <hr>
                     <p><%= camp.description %></p>
                     <%if(localUser && camp.author.id.equals(localUser.id)){ %>
-                    <a class="btn btn-xs btn-warning" href="/campgrounds/<%= camp.id%>/edit">Edit </a>
+                    <a class="btn btn-sm btn-warning" href="/campgrounds/<%= camp.id%>/edit">Edit </a>
                     <form class="camp-delete" action="/campgrounds/<%=camp.id%>?_method=DELETE" method="POST">
-                        <button class="btn btn-xs btn-danger" type="submit">Delete </button>
+                        <button class="btn btn-sm btn-danger" type="submit">Delete </button>
                     </form>
                     <%}%>
                 </div>
@@ -35,18 +35,30 @@
                 </div>
                 <hr />
                 <% camp.comments.forEach((comment)=>{ %>
-                <div class="row">
+                <div class="comment-container row">
                     <div class="col-md-12">
                         <strong><%= comment.author.username %></strong>
                         <span class="float-right"> 10 days ago</span>
                         <p><%= comment.text %></p>
+                        <%if(localUser && comment.author.id.equals(localUser.id)){ %>
+                        <div class="containe float-right">
+                            <a class="btn btn-sm btn-warning"
+                                href="/campgrounds/<%= camp.id%>/comments/<%=comment.id%>/edit">Edit </a>
+                            <form class="comment-delete"
+                                action="/campgrounds/<%= camp.id%>/comments/<%=comment.id%>?_method=DELETE"
+                                method="POST">
+                                <button class="btn btn-sm btn-danger" type="submit">Delete </button>
+                            </form>
+                        </div>
+
+                        <%}%>
                     </div>
                 </div>
                 <% }); %>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
-</div>
 
-<% include ../partials/footer.ejs %>
+    <% include ../partials/footer.ejs %>
