@@ -12,6 +12,7 @@ Dependencies:
 - Express-session
 - Passport
 - Connect-Flash
+- MomentJS
 
 ***
 TODO LIST:
