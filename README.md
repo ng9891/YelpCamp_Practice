@@ -13,6 +13,7 @@ Dependencies:
 - Passport
 - Connect-Flash
 - MomentJS
+- Leaflet Map
 
 ***
 TODO LIST:
