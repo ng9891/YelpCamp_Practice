@@ -21,6 +21,9 @@
                     <p><%= camp.description %></p>
                     <%if(localUser && camp.author.id.equals(localUser.id)){ %>
                     <a class="btn btn-xs btn-warning" href="/campgrounds/<%= camp.id%>/edit">Edit </a>
+                    <form class="camp-delete" action="/campgrounds/<%=camp.id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-xs btn-danger" type="submit">Delete </button>
+                    </form>
                     <%}%>
                 </div>
             </div>

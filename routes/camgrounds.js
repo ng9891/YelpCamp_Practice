@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Campground = require("../models/campground");
+const Comment = require("../models/comments");
 const middleware = require("../middleware/middleware");
 const {
 	isLoggedIn,
@@ -95,6 +96,29 @@ router.post("/", isLoggedIn, (req, res) => {
 			res.redirect("/campgrounds");
 		}
 	});
+});
+
+router.delete("/:id", isLoggedIn, checkCampgroundOwner, (req, res) => {
+	Comment.deleteMany({
+		_id: {
+			$in: req.camp.comments
+		}
+	}, (err) => {
+		if (err) {
+			console.log(err);
+			req.flash("error", err.stack);
+			return res.redirect("/campgrounds");
+		}
+		Campground.findByIdAndDelete(req.params.id, (err) => {
+			if (err) {
+				req.flash("error", err);
+				return res.redirect("/campgrounds");
+			}
+			req.flash("success", "Campground deleted.");
+			res.redirect("/campgrounds");
+		});
+	});
+	// res.send("deleted");
 });
 
 module.exports = router;

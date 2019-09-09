@@ -1,3 +1,7 @@
-body{
+body {
     background: whitesmoke;
+}
+
+.camp-delete {
+    display: inline;
 }

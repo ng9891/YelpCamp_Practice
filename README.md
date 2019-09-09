@@ -21,8 +21,8 @@ TODO LIST:
   - [x] Comments to campgrounds
   - [x] Session
   - [x] Login and Register
-  - [ ] CRUD for campgrounds
-  - [ ] CRUD for comments
+  - [x] CRUD routes for campgrounds
+  - [ ] CRUD routes for comments
   - [ ] Admin user
   - [ ] Post creation with MomentJS
   - [ ] Password Reset
