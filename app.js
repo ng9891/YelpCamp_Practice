@@ -13,10 +13,12 @@ const flash = require("connect-flash");
 const app = express();
 mongoose.connect("mongodb://localhost:27017/yelpcamp", {
 	useNewUrlParser: true,
-	useFindAndModify: false
+	useFindAndModify: false,
+	useCreateIndex: true
 });
 // const seedDb = require("./seed.js");
 // seedDb();
+require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyparser.urlencoded({
@@ -24,9 +26,10 @@ app.use(bodyparser.urlencoded({
 }));
 app.use(methodoverride("_method"));
 
+app.locals.moment = require("moment"); // To be used in ejs files.
 // Passport config
 app.use(require("express-session")({
-	secret: "This is not a secret at all. Don't look",
+	secret: process.env.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false
 }));

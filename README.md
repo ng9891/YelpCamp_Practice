@@ -23,9 +23,11 @@ TODO LIST:
   - [x] Login and Register
   - [x] CRUD routes for campgrounds
   - [x] CRUD routes for comments
-  - [ ] Admin user
-  - [ ] Post creation with MomentJS
-  - [ ] Password Reset
+  - [x] Admin user
+  - [x] Date with MomentJS
+  - [x] Footer
+  - [x] Password Reset
+  - [ ] CRSF
   - [ ] Landing Page
   - [ ] Camp geolocation
   - [ ] User Profile

@@ -80,6 +80,7 @@ router.post("/", isLoggedIn, (req, res) => {
 		name: req.body.name,
 		image: req.body.image,
 		description: req.body.description,
+		price: req.body.price,
 		author: {
 			id: req.user._id,
 			username: req.user.username
