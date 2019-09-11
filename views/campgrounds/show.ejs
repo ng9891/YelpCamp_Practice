@@ -24,6 +24,7 @@
                     <%if(localUser && camp.author.id.equals(localUser.id) || localUser && localUser.isAdmin){ %>
                     <a class="btn btn-sm btn-warning" href="/campgrounds/<%= camp.id%>/edit">Edit </a>
                     <form class="camp-delete" action="/campgrounds/<%=camp.id%>?_method=DELETE" method="POST">
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                         <button class="btn btn-sm btn-danger" type="submit">Delete </button>
                     </form>
                     <%}%>
@@ -49,6 +50,7 @@
                             <form class="comment-delete"
                                 action="/campgrounds/<%= camp.id%>/comments/<%=comment.id%>?_method=DELETE"
                                 method="POST">
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                                 <button class="btn btn-sm btn-danger" type="submit">Delete </button>
                             </form>
                         </div>

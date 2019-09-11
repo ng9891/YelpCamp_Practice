@@ -8,6 +8,7 @@
 
         <div class="col-xs-12 col-md-6 col-lg-4" style="margin: 30px auto;">
             <form action="/campgrounds/<%=camp._id%>/comments" method="POST">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                 <div class="form-group">
                     <textarea class="form-control" name="text"></textarea>
                 </div>
